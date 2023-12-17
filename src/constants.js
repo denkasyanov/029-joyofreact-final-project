@@ -1,5 +1,6 @@
 export const BLOG_TITLE = "Bits & Bytes";
 export const BLOG_DESCRIPTION = "A wonderful blog about JavaScript";
+export const AUTHOR = "Den Kasyanov";
 
 export const LIGHT_COLORS = {
   "--color-text": "hsl(0deg 0% 5%)",

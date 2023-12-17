@@ -2,14 +2,10 @@ import { getBlogPostList } from "@/helpers/file-helpers";
 
 import RSS from "rss";
 
-import { BLOG_DESCRIPTION, BLOG_TITLE } from "@/constants";
+import { AUTHOR, BLOG_DESCRIPTION, BLOG_TITLE } from "@/constants";
 
 export async function GET(request) {
-  const protocol = request.headers["x-forwarded-proto"] || "https";
-  const host = request.headers.host;
-  const baseUrl = `${protocol}://${host}`;
-
-  console.log("baseUrl", baseUrl);
+  const baseUrl = request.nextUrl.origin;
 
   const feed = new RSS({
     title: BLOG_TITLE,
@@ -17,16 +13,14 @@ export async function GET(request) {
     feed_url: `${baseUrl}/rss.xml`,
     site_url: baseUrl,
     image_url: `${baseUrl}/favicon.ico`,
-    managingEditor: "My Name",
-    webMaster: "My Name",
+    managingEditor: AUTHOR,
+    webMaster: AUTHOR,
     language: "en",
     pubDate: new Date().toUTCString(),
     ttl: "60",
   });
 
   const posts = await getBlogPostList();
-
-  const items = [];
 
   posts.forEach((post) => {
     feed.item({
