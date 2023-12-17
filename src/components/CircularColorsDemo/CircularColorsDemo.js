@@ -1,62 +1,87 @@
-import React from 'react';
-import clsx from 'clsx';
-import {
-  Play,
-  Pause,
-  RotateCcw,
-} from 'react-feather';
+"use client";
+import clsx from "clsx";
+import React from "react";
+import { Pause, Play, RotateCcw } from "react-feather";
 
-import Card from '@/components/Card';
-import VisuallyHidden from '@/components/VisuallyHidden';
+import Card from "@/components/Card";
+import VisuallyHidden from "@/components/VisuallyHidden";
 
-import styles from './CircularColorsDemo.module.css';
+import { motion } from "framer-motion";
+import styles from "./CircularColorsDemo.module.css";
 
 const COLORS = [
-  { label: 'red', value: 'hsl(348deg 100% 60%)' },
-  { label: 'yellow', value: 'hsl(50deg 100% 55%)' },
-  { label: 'blue', value: 'hsl(235deg 100% 65%)' },
+  { label: "red", value: "hsl(348deg 100% 60%)" },
+  { label: "yellow", value: "hsl(50deg 100% 55%)" },
+  { label: "blue", value: "hsl(235deg 100% 65%)" },
 ];
 
 function CircularColorsDemo() {
   // TODO: This value should increase by 1 every second:
-  const timeElapsed = 0;
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const [timeElapsed, setTimeElapsed] = React.useState(0);
 
   // TODO: This value should cycle through the colors in the
   // COLORS array:
-  const selectedColor = COLORS[0];
+  const [selectedColor, setSelectedColor] = React.useState(COLORS[0]);
+
+  const [intervalId, setIntervalId] = React.useState(null);
+
+  React.useEffect(() => {
+    setSelectedColor(COLORS[timeElapsed % COLORS.length]);
+  }, [timeElapsed]);
+
+  function handleTogglePlay() {
+    if (!isPlaying) {
+      setIsPlaying(true);
+      const id = setInterval(() => {
+        setTimeElapsed((timeElapsed) => timeElapsed + 1);
+      }, 1000);
+      setIntervalId(id);
+    } else {
+      setIsPlaying(false);
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  }
+
+  function handleReset() {
+    setTimeElapsed(0);
+    if (isPlaying) {
+      setIsPlaying(false);
+
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  }
 
   return (
     <Card as="section" className={styles.wrapper}>
       <ul className={styles.colorsWrapper}>
         {COLORS.map((color, index) => {
-          const isSelected =
-            color.value === selectedColor.value;
+          const isSelected = color.value === selectedColor.value;
 
           return (
-            <li
-              className={styles.color}
-              key={index}
-            >
+            <li className={styles.color} key={index}>
               {isSelected && (
-                <div
-                  className={
-                    styles.selectedColorOutline
-                  }
+                <motion.div
+                  layoutId="layout-outline"
+                  className={styles.selectedColorOutline}
+                  style={{
+                    zIndex: 2,
+                  }}
                 />
               )}
               <div
                 className={clsx(
                   styles.colorBox,
-                  isSelected &&
-                    styles.selectedColorBox
+                  isSelected && styles.selectedColorBox
                 )}
                 style={{
                   backgroundColor: color.value,
                 }}
               >
-                <VisuallyHidden>
-                  {color.label}
-                </VisuallyHidden>
+                <VisuallyHidden>{color.label}</VisuallyHidden>
               </div>
             </li>
           );
@@ -69,11 +94,20 @@ function CircularColorsDemo() {
           <dd>{timeElapsed}</dd>
         </dl>
         <div className={styles.actions}>
-          <button>
-            <Play />
-            <VisuallyHidden>Play</VisuallyHidden>
+          <button onClick={handleTogglePlay}>
+            {isPlaying ? (
+              <>
+                <Pause />
+                <VisuallyHidden>Pause</VisuallyHidden>{" "}
+              </>
+            ) : (
+              <>
+                <Play />
+                <VisuallyHidden>Play</VisuallyHidden>
+              </>
+            )}
           </button>
-          <button>
+          <button onClick={handleReset}>
             <RotateCcw />
             <VisuallyHidden>Reset</VisuallyHidden>
           </button>
