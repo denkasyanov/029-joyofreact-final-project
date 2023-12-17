@@ -10,7 +10,7 @@ const DivisionGroupsDemo = dynamic(() =>
 
 const components = {
   pre: (props) => <CodeSnippet {...props}>{props.children}</CodeSnippet>,
-  DivisionGroupsDemo: () => <DivisionGroupsDemo />,
+  DivisionGroupsDemo: (props) => <DivisionGroupsDemo {...props} />,
 };
 
 export function PostMDX(props) {

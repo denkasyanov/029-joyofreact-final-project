@@ -55,11 +55,12 @@ function DivisionGroupsDemo({
             {range(numOfGroups).map((groupIndex) => (
               <div key={groupIndex} className={styles.group}>
                 {range(numOfItemsPerGroup).map((index) => {
-                  const globalId = groupIndex * numOfItemsPerGroup + index;
+                  const globalId = `${groupIndex * numOfItemsPerGroup + index}`;
+                  const universallyGlobalId = `${id}-${globalId}`;
                   return (
                     <motion.div
-                      key={globalId}
-                      layoutId={`${id}-${globalId}`}
+                      key={universallyGlobalId}
+                      layoutId={universallyGlobalId}
                       className={styles.item}
                     />
                   );
@@ -74,7 +75,15 @@ function DivisionGroupsDemo({
             <p className={styles.remainderHeading}>Remainder Area</p>
 
             {range(remainder).map((index) => {
-              return <div key={index} className={styles.item} />;
+              const globalId = `${numOfItems - index - 1}`;
+              const universallyGlobalId = `${id}-${globalId}`;
+              return (
+                <motion.div
+                  key={universallyGlobalId}
+                  layoutId={universallyGlobalId}
+                  className={styles.item}
+                />
+              );
             })}
           </div>
         )}
