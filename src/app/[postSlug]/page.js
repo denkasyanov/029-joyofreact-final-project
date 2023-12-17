@@ -4,6 +4,18 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 
 import styles from "./postSlug.module.css";
 
+export async function generateMetadata({ params }) {
+  const { postSlug } = params;
+
+  const post = await loadBlogPost(postSlug);
+
+  const { frontmatter } = post;
+
+  return {
+    title: frontmatter.title,
+  };
+}
+
 import BlogHero from "@/components/BlogHero";
 
 async function BlogPost({ params }) {
