@@ -7,6 +7,8 @@ import VisuallyHidden from "@/components/VisuallyHidden";
 
 import { DARK_TOKENS, LIGHT_TOKENS } from "@/constants";
 
+import Link from "next/link";
+
 import React from "react";
 import styles from "./Header.module.css";
 
@@ -36,7 +38,12 @@ function Header({ initialTheme, className, ...delegated }) {
       <Logo />
 
       <div className={styles.actions}>
-        <button className={styles.action}>
+        <Link
+          href="/rss.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.action}
+        >
           <Rss
             size="1.5rem"
             style={{
@@ -45,7 +52,7 @@ function Header({ initialTheme, className, ...delegated }) {
             }}
           />
           <VisuallyHidden>View RSS feed</VisuallyHidden>
-        </button>
+        </Link>
         <button className={styles.action} onClick={handleColorThemeToggle}>
           {theme === "light" ? <Sun size="1.5rem" /> : <Moon size="1.5rem" />}
           <VisuallyHidden>Toggle dark / light mode</VisuallyHidden>
