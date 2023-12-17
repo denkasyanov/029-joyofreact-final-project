@@ -1,9 +1,9 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 
-import { Code } from "bright";
+import CodeSnippet from "@/components/CodeSnippet";
 
 const components = {
-  pre: (props) => <Code {...props}>{props.children}</Code>,
+  pre: (props) => <CodeSnippet {...props}>{props.children}</CodeSnippet>,
 };
 
 export function PostMDX(props) {
