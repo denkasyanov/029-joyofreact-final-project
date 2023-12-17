@@ -13,9 +13,9 @@ const CircularColorsDemo = dynamic(() =>
 );
 
 const components = {
-  pre: (props) => <CodeSnippet {...props}>{props.children}</CodeSnippet>,
-  DivisionGroupsDemo: (props) => <DivisionGroupsDemo {...props} />,
-  CircularColorsDemo: () => <CircularColorsDemo />,
+  pre: CodeSnippet,
+  DivisionGroupsDemo,
+  CircularColorsDemo,
 };
 
 export function PostMDX(props) {
