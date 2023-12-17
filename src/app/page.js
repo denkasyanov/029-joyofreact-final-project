@@ -18,7 +18,6 @@ async function Home() {
     <div className={styles.wrapper}>
       <h1 className={styles.mainHeading}>Latest Content:</h1>
 
-      {/* TODO: Iterate over the data read from the file system! */}
       {posts.map((post) => {
         return (
           <BlogSummaryCard

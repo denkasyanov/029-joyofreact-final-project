@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import "./styles.css";
 
+import { cookies } from "next/headers";
+
 const mainFont = Work_Sans({
   subsets: ["latin"],
   display: "fallback",
@@ -22,19 +24,21 @@ const monoFont = Spline_Sans_Mono({
 });
 
 function RootLayout({ children }) {
-  // TODO: Dynamic theme depending on user preference
-  const theme = "light";
+  const colorThemeCookie = cookies().get("color-theme");
+  const theme = colorThemeCookie?.value || "light";
+
+  const themeColors = theme === "light" ? LIGHT_TOKENS : DARK_TOKENS;
 
   return (
     <html
       lang="en"
       className={clsx(mainFont.variable, monoFont.variable)}
       data-color-theme={theme}
-      style={theme === "light" ? LIGHT_TOKENS : DARK_TOKENS}
+      style={themeColors}
     >
       <body>
         <RespectMotionPreferences>
-          <Header theme={theme} />
+          <Header initialTheme={theme} />
           <main>{children}</main>
           <Footer />
         </RespectMotionPreferences>
