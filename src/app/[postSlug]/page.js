@@ -13,6 +13,7 @@ export async function generateMetadata({ params }) {
 
   return {
     title: frontmatter.title,
+    description: frontmatter.abstract,
   };
 }
 
