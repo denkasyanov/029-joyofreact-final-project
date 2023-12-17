@@ -1,6 +1,6 @@
 import { loadBlogPost } from "@/helpers/file-helpers";
 
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { PostMDX } from "@/components/PostMDX";
 
 import styles from "./postSlug.module.css";
 
@@ -33,7 +33,7 @@ async function BlogPost({ params }) {
         publishedOn={frontmatter.publishedOn}
       />
       <div className={styles.page}>
-        <MDXRemote source={content} />
+        <PostMDX source={content} />
       </div>
     </article>
   );
