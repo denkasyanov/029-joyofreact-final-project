@@ -5,6 +5,7 @@ import { PostMDX } from "@/components/PostMDX";
 import styles from "./postSlug.module.css";
 
 import BlogHero from "@/components/BlogHero";
+import { BLOG_TITLE } from "@/constants";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }) {
   const { frontmatter } = post;
 
   return {
-    title: frontmatter.title,
+    title: `${frontmatter.title} · ${BLOG_TITLE}`,
     description: frontmatter.abstract,
   };
 }
