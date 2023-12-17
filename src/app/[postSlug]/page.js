@@ -4,10 +4,17 @@ import { PostMDX } from "@/components/PostMDX";
 
 import styles from "./postSlug.module.css";
 
+import BlogHero from "@/components/BlogHero";
+import { notFound } from "next/navigation";
+
 export async function generateMetadata({ params }) {
   const { postSlug } = params;
 
   const post = await loadBlogPost(postSlug);
+
+  if (!post) {
+    return notFound();
+  }
 
   const { frontmatter } = post;
 
@@ -17,12 +24,14 @@ export async function generateMetadata({ params }) {
   };
 }
 
-import BlogHero from "@/components/BlogHero";
-
 async function BlogPost({ params }) {
   const { postSlug } = params;
 
   const post = await loadBlogPost(postSlug);
+
+  if (!post) {
+    return notFound();
+  }
 
   const { frontmatter, content } = post;
 

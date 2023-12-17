@@ -23,6 +23,13 @@ export async function getBlogPostList() {
 }
 
 export const loadBlogPost = React.cache(async (slug) => {
+  // check that file exists
+  try {
+    await fs.access(path.join(process.cwd(), `/content/${slug}.mdx`));
+  } catch (e) {
+    return null;
+  }
+
   const rawContent = await readFile(`/content/${slug}.mdx`);
 
   const { data: frontmatter, content } = matter(rawContent);
