@@ -20,14 +20,9 @@ function CircularColorsDemo() {
 
   const [timeElapsed, setTimeElapsed] = React.useState(0);
 
-  // COLORS array:
-  const [selectedColor, setSelectedColor] = React.useState(COLORS[0]);
+  const selectedColor = COLORS[timeElapsed % COLORS.length];
 
   const [intervalId, setIntervalId] = React.useState(null);
-
-  React.useEffect(() => {
-    setSelectedColor(COLORS[timeElapsed % COLORS.length]);
-  }, [timeElapsed]);
 
   function handleTogglePlay() {
     if (!isPlaying) {
