@@ -21,6 +21,8 @@ function DivisionGroupsDemo({
 
   const remainder = includeRemainderArea ? numOfItems % numOfGroups : null;
 
+  const id = React.useId();
+
   // When we're splitting into 1-3 groups, display side-by-side
   // columns. When we get to 4, it should switch to a 2x2 grid.
   const gridStructure =
@@ -53,10 +55,11 @@ function DivisionGroupsDemo({
             {range(numOfGroups).map((groupIndex) => (
               <div key={groupIndex} className={styles.group}>
                 {range(numOfItemsPerGroup).map((index) => {
+                  const globalId = groupIndex * numOfItemsPerGroup + index;
                   return (
                     <motion.div
-                      layout={true}
-                      key={index}
+                      key={globalId}
+                      layoutId={`${id}-${globalId}`}
                       className={styles.item}
                     />
                   );
